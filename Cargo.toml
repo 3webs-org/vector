@@ -1,0 +1,16 @@
+[package]
+name = "vanadium-browser"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies]
+gtk4 = "0.8.0"
+url = "2.5.0"
+webkit6 = "0.3.0"
+
+[dependencies.adw]
+package = "libadwaita"
+version = "0.6.0"
+
+[build-dependencies]
+glib-build-tools = "0.19.0"

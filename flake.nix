@@ -1,3 +1,6 @@
+# Copyright 2024 3WEBS LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 {
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
   inputs.nci.url = "github:yusdacra/nix-cargo-integration/53af4303dda1fe6e575b2c5ee662ac9b23a18c9f";

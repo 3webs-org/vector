@@ -1,3 +1,6 @@
+# Copyright 2024 3WEBS LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 [package]
 name = "vanadium-browser"
 version = "0.1.0"

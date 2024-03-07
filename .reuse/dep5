@@ -1,0 +1,23 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: vanadium
+Source: https://github.com/3webs-org/vanadium
+
+Files:
+  flake.lock
+  Cargo.lock
+Copyright: No Copyright
+License: CC0-1.0
+Comment: Computer-generated files have no copyright and are therefore public domain by default.
+
+Files:
+  .github/CODE_OF_CONDUCT.md
+  .github/renovate.json
+Copyright: Unknown
+License: CC0-1.0
+Comment: The licenses of these files are unknown
+
+Files:
+  assets/*
+Copyright: Copyright 2024 3WEBS LLC
+License: GPL-3.0-or-later
+Comment: 3WEBS LLC plans to apply for a trademark

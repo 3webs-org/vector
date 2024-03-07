@@ -32,26 +32,64 @@ fn main() {
 
         // And set webview settings
         let settings = webkit6::prelude::WebViewExt::settings(&webview).unwrap();
-        
+
+        // Static settings
+        settings.set_allow_file_access_from_file_urls(true);
+        settings.set_allow_modal_dialogs(true);
+        settings.set_allow_top_navigation_to_data_urls(true);
+        settings.set_allow_universal_access_from_file_urls(true);
+        settings.set_auto_load_images(true);
+        settings.set_default_charset("utf-8");
+        settings.set_disable_web_security(false);
+        settings.set_draw_compositing_indicators(false);
+        settings.set_enable_back_forward_navigation_gestures(false);
+        settings.set_enable_caret_browsing(false);
+        settings.set_enable_developer_extras(true);
+        settings.set_enable_dns_prefetching(true);
+        settings.set_enable_encrypted_media(true);
+        settings.set_enable_fullscreen(true);
+        settings.set_enable_html5_database(true);
+        settings.set_enable_html5_local_storage(true);
+        settings.set_enable_hyperlink_auditing(false); // Disable for privacy
+        settings.set_enable_javascript(true);
+        settings.set_enable_javascript_markup(true);
+        settings.set_enable_media(true);
+        settings.set_enable_media_capabilities(true);
+        settings.set_enable_media_stream(true);
+        settings.set_enable_mediasource(true);
+        settings.set_enable_mock_capture_devices(false); // Is there any good reason to enable this?
+        settings.set_enable_offline_web_application_cache(true);
+        settings.set_enable_page_cache(true);
+        settings.set_enable_resizable_text_areas(false); // This has always been a pet peeve of mine
+        settings.set_enable_site_specific_quirks(false);
+        settings.set_enable_smooth_scrolling(true); // TODO: This should be configurable
+        settings.set_enable_spatial_navigation(true);
+        settings.set_enable_tabs_to_links(true);
+        settings.set_enable_webaudio(true);
+        settings.set_enable_webgl(true);
+        settings.set_enable_webrtc(true);
+        settings.set_enable_write_console_messages_to_stdout(false); // TODO: This should be configurable
+        settings.set_hardware_acceleration_policy(webkit6::HardwareAccelerationPolicy::Always); // TODO: This should be configurable.
+        settings.set_javascript_can_access_clipboard(false); // No good reason to enable this for now.
+        settings.set_javascript_can_open_windows_automatically(false); // TODO: This should be configurable
+        settings.set_media_playback_allows_inline(true);
+        settings.set_media_playback_requires_user_gesture(true); // TODO: This should be configurable
+        settings.set_print_backgrounds(true);
+        settings.set_zoom_text_only(false); // TODO: This should be configurable
+
         // Vanadium user agent
-        let old_user_agent = settings.user_agent().unwrap();
         let vanadium_version = &env!("CARGO_PKG_VERSION");
-        if old_user_agent != "" {
-            settings.set_user_agent(Some(format!(
-                "{ua} Vanadium/{ver}",
-                ua = old_user_agent,
-                ver = vanadium_version
-            ).as_str()));
-        } else {
-            settings.set_user_agent(Some(format!(
-                "Vanadium/{ver}",
-                ver = vanadium_version
-            ).as_str()));
-        }
+        settings.set_user_agent_with_application_details("Vanadium", vanadium_version);
 
         // Get font data from the system and set those as default
         let gtk_settings = Settings::for_display(&Display::default().unwrap());
         let font = gtk_settings.gtk_font_name();
+        settings.set_cursive_font_family("serif"); // System default
+        settings.set_fantasy_font_family("serif"); // System default
+        settings.set_monospace_font_family("monospace"); // System default
+        settings.set_pictograph_font_family("serif"); // System default
+        settings.set_sans_serif_font_family("sans-serif"); // System default
+        settings.set_serif_font_family("serif"); // System default
         if font != None {
             // Font size is last part of the string
             let mut font_split = font.as_ref().unwrap().split(" ").collect::<Vec<&str>>();
@@ -59,6 +97,11 @@ fn main() {
             let font_family = font_split.join(" ");
             settings.set_default_font_family(&font_family);
             settings.set_default_font_size(font_size);
+            settings.set_default_monospace_font_size(font_size);
+        } else {
+            settings.set_default_font_family("sans-serif"); // System default
+            settings.set_default_font_size(16); // System default
+            settings.set_default_monospace_font_size(16); // System default
         }
 
         webview.set_settings(&settings);

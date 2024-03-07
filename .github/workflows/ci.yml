@@ -20,15 +20,34 @@ jobs:
             uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11  # v4.1.1
             with:
                 fetch-depth: 0
+          - name: 🟰 Detect Changed Files
+            uses: tj-actions/changed-files@7fc073d92265804a8d4e4982b637dee053daf6c5  # v42.0.7
+            id: changed-files
+            with:
+              files: '**/*.md'
+              separator: ","
           - name: 🖋️ Markdownlint
             uses: DavidAnson/markdownlint-cli2-action@510b996878fc0d1a46c8a04ec86b06dbfba09de7  # v15.0.0
+            with:
+                globs: ${{ steps.changed-files.outputs.files }}
+                separator: ","
     reuse:
-        name: 📝 REUSE Compliance
+        name: 📝 REUSE
         runs-on: ubuntu-latest
         steps:
           - name: 📦 Checkout Repository
             uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11  # v4.1.1
             with:
                 fetch-depth: 0
+          - name: 🟰 Detect Changed Files
+            uses: tj-actions/changed-files@7fc073d92265804a8d4e4982b637dee053daf6c5  # v42.0.7
+            id: changed-files
+            with:
+              files: '**/*'
+              separator: "|"
+          - name: 🗑️ Delete Unchanged Files
+            run: |
+              shopt -s extglob
+              rm -rf !(${{ steps.changed-files.outputs.files }}|.reuse|LICENSES)
           - name: 📝 REUSE Compliance Check
             uses: fsfe/reuse-action@a46482ca367aef4454a87620aa37c2be4b2f8106  # v3.0.0

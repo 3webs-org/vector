@@ -34,7 +34,20 @@ fn main() {
         let settings = webkit6::prelude::WebViewExt::settings(&webview).unwrap();
         
         // Vanadium user agent
-        settings.set_user_agent(Some("Vanadium/0.1"));
+        let old_user_agent = settings.user_agent().unwrap();
+        let vanadium_version = &env!("CARGO_PKG_VERSION");
+        if old_user_agent != "" {
+            settings.set_user_agent(Some(format!(
+                "{ua} Vanadium/{ver}",
+                ua = old_user_agent,
+                ver = vanadium_version
+            ).as_str()));
+        } else {
+            settings.set_user_agent(Some(format!(
+                "Vanadium/{ver}",
+                ver = vanadium_version
+            ).as_str()));
+        }
 
         // Get font data from the system and set those as default
         let gtk_settings = Settings::for_display(&Display::default().unwrap());

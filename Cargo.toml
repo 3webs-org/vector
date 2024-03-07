@@ -5,7 +5,8 @@ edition = "2018"
 
 [dependencies]
 gtk4 = { version = "0.8.0", features = ["v4_2", "v4_4", "v4_6", "v4_8", "v4_10"] }
-url = "2.5.0"
+serde = { version = "1.0.197", features = ["derive"] }
+url = { version = "2.5.0", features = ["serde"] }
 webkit6 = { version = "0.3.0", features = ["v2_42"] }
 
 [dependencies.adw]

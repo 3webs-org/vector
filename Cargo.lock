@@ -846,6 +846,7 @@ dependencies = [
  "form_urlencoded",
  "idna",
  "percent-encoding",
+ "serde",
 ]
 
 [[package]]
@@ -855,6 +856,7 @@ dependencies = [
  "glib-build-tools",
  "gtk4",
  "libadwaita",
+ "serde",
  "url",
  "webkit6",
 ]

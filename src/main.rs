@@ -198,11 +198,69 @@ fn main() {
             webview.reload();
         }));
         header.pack_start(&refresh_button);
-        let settings_button = Button::builder()
+
+        // Create the menu button and corresponding actions
+        let menu = gio::Menu::new();
+        menu.append(Some("About"), Some("app.about"));
+        menu.append(Some("Quit"), Some("app.quit"));
+        let about_action = gio::SimpleAction::new("about", None);
+        about_action.connect_activate(clone!(@weak window => move |_, _| {
+            let about = adw::AboutWindow::builder()
+                .transient_for(&window)
+                .application_name("Vanadium")
+                .version(env!("CARGO_PKG_VERSION"))
+                .website("https://github.com/3webs-org/vanadium")
+                .issue_url("https://github.com/3webs-org/vanadium/issues")
+                .developer_name("3WEBS LLC")
+                .copyright("© 2024 3WEBS LLC")
+                .license_type(gtk4::License::Gpl30)
+                .developers([
+                    "Gavin John <admin@3webs.org>",
+                ])
+                .build();
+            about.add_legal_section(
+                "gtk-rs-core",
+                Some("<a href=\"https://crates.io/crates/glib-build-tools\">Crate</a> <a href=\"https://github.com/gtk-rs/gtk-rs-core\">Source</a>"),
+                gtk4::License::MitX11,
+                Some("")
+            );
+            about.add_legal_section(
+                "gtk4-rs",
+                Some("<a href=\"https://crates.io/crates/gtk4\">Crate</a> <a href=\"https://github.com/gtk-rs/gtk4-rs\">Source</a>"),
+                gtk4::License::MitX11,
+                Some("")
+            );
+            about.add_legal_section(
+                "libadwaita-rs",
+                Some("<a href=\"https://crates.io/crates/libadwaita\">Crate</a> <a href=\"https://gitlab.gnome.org/World/Rust/libadwaita-rs\">Source</a>"),
+                gtk4::License::MitX11,
+                Some("")
+            );
+            about.add_legal_section(
+                "webkit6-rs",
+                Some("<a href=\"https://crates.io/crates/webkit6\"> Crate</a> <a href=\"https://gitlab.gnome.org/World/Rust/webkit6-rs\">Source</a>"),
+                gtk4::License::MitX11,
+                Some("")
+            );
+            about.add_legal_section(
+                "rust-url",
+                Some("<a href=\"https://crates.io/crates/url\">Crate</a> <a href=\"https://github.com/servo/rust-url\">Source</a>"),
+                gtk4::License::MitX11, // OR Apache-2.0
+                Some("")
+            );
+            about.present();
+        }));
+        app.add_action(&about_action);
+        let quit_action = gio::SimpleAction::new("quit", None);
+        quit_action.connect_activate(clone!(@weak window => move |_, _| {
+            window.close();
+        }));
+        app.add_action(&quit_action);
+        let menu_button = MenuButton::builder()
             .icon_name("open-menu-symbolic")
+            .menu_model(&menu)
             .build();
-        settings_button.set_sensitive(false); // Not implemented yet
-        header.pack_end(&settings_button);
+        header.pack_end(&menu_button);
         content.append(&header);
 
         // Add the webview to the content

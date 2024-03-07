@@ -4,14 +4,14 @@ version = "0.1.0"
 edition = "2018"
 
 [dependencies]
-gtk4 = "0.8.0"
+gtk4 = { version = "0.8.0", features = ["v4_2", "v4_4", "v4_6", "v4_8", "v4_10"] }
 url = "2.5.0"
-webkit6 = "0.3.0"
+webkit6 = { version = "0.3.0", features = ["v2_42"] }
 
 [dependencies.adw]
 package = "libadwaita"
 version = "0.6.0"
-features = ["v1_2"]
+features = ["v1_2", "v1_1", "v1_3", "v1_4"]
 
 [build-dependencies]
 glib-build-tools = "0.19.0"

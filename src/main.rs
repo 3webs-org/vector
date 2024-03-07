@@ -3,6 +3,7 @@ use webkit6::prelude::*;
 
 use adw::{Application, ApplicationWindow, HeaderBar};
 use gtk4::*;
+use gdk::Display;
 use glib::clone;
 use url::Url;
 use webkit6::WebView;
@@ -28,6 +29,26 @@ fn main() {
         let webview = WebView::new();
         webview.set_hexpand(true);
         webview.set_vexpand(true);
+
+        // And set webview settings
+        let settings = webkit6::prelude::WebViewExt::settings(&webview).unwrap();
+        
+        // Vanadium user agent
+        settings.set_user_agent(Some("Vanadium/0.1"));
+
+        // Get font data from the system and set those as default
+        let gtk_settings = Settings::for_display(&Display::default().unwrap());
+        let font = gtk_settings.gtk_font_name();
+        if font != None {
+            // Font size is last part of the string
+            let mut font_split = font.as_ref().unwrap().split(" ").collect::<Vec<&str>>();
+            let font_size = font_split.pop().unwrap().parse::<u32>().unwrap();
+            let font_family = font_split.join(" ");
+            settings.set_default_font_family(&font_family);
+            settings.set_default_font_size(font_size);
+        }
+
+        webview.set_settings(&settings);
 
         // Header
         let header = HeaderBar::builder()
@@ -90,10 +111,32 @@ fn main() {
         let back_button = Button::builder()
             .icon_name("go-previous-symbolic")
             .build();
+        back_button.connect_clicked(clone!(@weak webview => move |_| {
+            webview.go_back();
+        }));
+        webview.connect_load_changed(clone!(@weak back_button, @weak webview => move |_, _| {
+            // Hide back button if there is no history
+            if webview.can_go_back() {
+                back_button.set_sensitive(true);
+            } else {
+                back_button.set_sensitive(false);
+            }
+        }));
         header.pack_start(&back_button);
         let forward_button = Button::builder()
             .icon_name("go-next-symbolic")
             .build();
+        forward_button.connect_clicked(clone!(@weak webview => move |_| {
+            webview.go_forward();
+        }));
+        webview.connect_load_changed(clone!(@weak forward_button, @weak webview => move |_, _| {
+            // Hide forward button if there is no history
+            if webview.can_go_forward() {
+                forward_button.set_sensitive(true);
+            } else {
+                forward_button.set_sensitive(false);
+            }
+        }));
         header.pack_start(&forward_button);
         let refresh_button = Button::builder()
             .icon_name("view-refresh-symbolic")
@@ -105,6 +148,7 @@ fn main() {
         let settings_button = Button::builder()
             .icon_name("open-menu-symbolic")
             .build();
+        settings_button.set_sensitive(false); // Not implemented yet
         header.pack_end(&settings_button);
         content.append(&header);
 

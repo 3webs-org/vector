@@ -76,10 +76,7 @@ fn main() {
         settings.set_media_playback_requires_user_gesture(true); // TODO: This should be configurable
         settings.set_print_backgrounds(true);
         settings.set_zoom_text_only(false); // TODO: This should be configurable
-
-        // Vanadium user agent
-        let vanadium_version = &env!("CARGO_PKG_VERSION");
-        settings.set_user_agent_with_application_details("Vanadium", vanadium_version);
+        settings.set_user_agent_with_application_details(Some("Vanadium"), Some(&env!("CARGO_PKG_VERSION")));
 
         // Get font data from the system and set those as default
         let gtk_settings = Settings::for_display(&Display::default().unwrap());

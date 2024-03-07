@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2018"
 
 [dependencies]
-gtk4 = { version = "0.8.0", features = ["v4_2", "v4_4", "v4_6", "v4_8", "v4_10"] }
+gtk4 = { version = "0.8.1", features = ["v4_2", "v4_4", "v4_6", "v4_8", "v4_10"] }
 serde = { version = "1.0.197", features = ["derive"] }
 url = { version = "2.5.0", features = ["serde"] }
 webkit6 = { version = "0.3.0", features = ["v2_42"] }

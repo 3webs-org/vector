@@ -27,7 +27,7 @@ jobs:
               files: '**/*.md'
               separator: ","
           - name: 🖋️ Markdownlint
-            uses: DavidAnson/markdownlint-cli2-action@f5cf187ef11bd3a68a127321b794aa252ff23019
+            uses: DavidAnson/markdownlint-cli2-action@60d6e1a6c09d0d389af98ac9c542da83b37b34df
             if: steps.changed.outcome == 'success'
             with:
               command: config

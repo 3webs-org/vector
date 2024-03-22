@@ -1,8 +1,10 @@
-{ pkgs ? import <nixpkgs> { }}:
-with pkgs;
-rust.packages.stable.rustPlatform.buildRustPackage rec {
-    name = "vanadium-browser";
-    version = "0.1.0";
+{ pkgs ? import <nixpkgs> { }, lib }: with pkgs; let
+    humanReadableName = "Vanadium";
+    cargoToml = builtins.readFile ./Cargo.toml;
+    packageData = lib.getAttr "package" (builtins.fromTOML cargoToml);
+in rust.packages.stable.rustPlatform.buildRustPackage rec {
+    pname = packageData.name;
+    version = packageData.version;
     src = lib.cleanSource ./.;
 
     buildInputs = [
@@ -22,5 +24,34 @@ rust.packages.stable.rustPlatform.buildRustPackage rec {
 
     cargoLock = {
         lockFile = ./Cargo.lock;
+    };
+
+    buildPhase = ''
+        cargo build --release --locked --all-features --target-dir=target
+    '';
+
+    installPhase = ''
+        mkdir -p $out/share/applications $out/share/pixmaps $out/bin
+
+        cat > $out/share/applications/${packageData.name}.desktop <<EOF
+        [Desktop Entry]
+        Name=${humanReadableName}
+        Exec=${packageData.name}
+        Icon=${packageData.name}
+        Type=Application
+        Categories=Network;WebBrowser;
+        EOF
+
+        cp target/release/${packageData.name} $out/bin/${packageData.name}
+        cp ./icon.svg $out/share/pixmaps/${packageData.name}.svg
+    '';
+
+    meta = {
+        description = packageData.description;
+        homepage = packageData.homepage;
+        platforms = lib.platforms.linux;
+        license = packageData.license;
+        maintainers = [ ]; # TODO
+        mainProgram = "${packageData.name}";
     };
 }

@@ -7,27 +7,101 @@
    viewBox="0 0 512 512"
    version="1.1"
    id="svg1"
+   sodipodi:docname="icon.svg"
+   inkscape:version="1.3.2 (091e20ef0f, 2023-11-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#ffffff"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:deskcolor="#505050"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="177.83736"
+     inkscape:cy="259.86174"
+     inkscape:window-width="1920"
+     inkscape:window-height="1003"
+     inkscape:window-x="0"
+     inkscape:window-y="40"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
   <defs
-     id="defs1" />
+     id="defs1">
+    <linearGradient
+       id="linearGradient22"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#e66100;stop-opacity:1;"
+         offset="0"
+         id="stop22" />
+      <stop
+         style="stop-color:#737373;stop-opacity:1;"
+         offset="1"
+         id="stop23" />
+    </linearGradient>
+    <linearGradient
+       id="swatch21">
+      <stop
+         style="stop-color:#e66100;stop-opacity:1;"
+         offset="0"
+         id="stop21" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#a0dfad;stop-opacity:1;"
+         offset="0"
+         id="stop5" />
+      <stop
+         style="stop-color:#80ff9c;stop-opacity:1;"
+         offset="1"
+         id="stop6" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4"
+       id="linearGradient6"
+       x1="64"
+       y1="256"
+       x2="448"
+       y2="256"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient22"
+       id="linearGradient23"
+       x1="-98"
+       y1="0"
+       x2="196"
+       y2="0"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
   <g
-     id="layer1">
+     id="layer1"
+     transform="matrix(1.3332978,0,0,1.3198382,-85.324218,-84.462812)">
     <circle
-       style="fill:#8ff0a4;fill-opacity:1"
+       style="fill:url(#linearGradient6);fill-opacity:1"
        id="path1"
        cx="256"
        cy="256"
        r="192" />
     <path
-       style="fill:#e66100;fill-opacity:1"
+       style="fill:url(#linearGradient23);fill-opacity:1;stroke:none;stroke-opacity:1;stroke-width:1.00033852;stroke-dasharray:none"
        id="path10"
        transform="rotate(90,0,256)"
-       d="m 196,0 -294,169.74098 0,-339.48196 z" />
+       d="M 196,0 -98,169.74098 v -339.48196 z" />
     <path
        style="fill:#241f31;fill-opacity:1"
        id="path11"
        transform="rotate(90,17,239)"
-       d="m 128,0 -192,110.85125 0,-221.7025 z" />
+       d="M 128,0 -64,110.85125 v -221.7025 z" />
   </g>
 </svg>

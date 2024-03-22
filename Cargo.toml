@@ -4,18 +4,29 @@
 [package]
 name = "vanadium-browser"
 version = "0.1.0"
-authors = [ "3WEBS LLC" ]
+authors = [
+    "Gavin John <admin@3webs.org>"
+]
 edition = "2018"
 description = "TODO"
 documentation = "TODO"
 readme = "./README.md"
-homepage = "TODO"
+homepage = "https://github.com/3webs-org/vanadium"
 repository = "https://github.com/3webs-org/vanadium"
 license = "GPL-3.0-or-later"
 
+[package.metadata]
+application_id = "org.3webs.vanadium"
+human_readable_name = "Vanadium"
+issue_url = "https://github.com/3webs-org/vanadium/issues"
+developer_name = "3WEBS LLC"
+copyright = "© 2024 3WEBS LLC"
+
 [dependencies]
 gtk4 = { version = "0.8.1", features = ["v4_2", "v4_4", "v4_6", "v4_8", "v4_10"] }
+lazy_static = "1.4.0"
 serde = { version = "1.0.197", features = ["derive"] }
+toml = "0.8.12"
 url = { version = "2.5.0", features = ["serde"] }
 webkit6 = { version = "0.3.0", features = ["v2_42"] }
 

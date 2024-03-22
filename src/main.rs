@@ -11,16 +11,27 @@ use glib::clone;
 use url::Url;
 use webkit6::WebView;
 
+use lazy_static::lazy_static;
+use toml::Value;
+
+lazy_static! {
+    static ref CARGO_MANIFEST: Value = {
+        // Include and parse the Cargo.toml file at compile time.
+        let cargo_toml_str = include_str!("../Cargo.toml");
+        toml::from_str(cargo_toml_str).expect("Failed to parse Cargo.toml")
+    };
+}
+
 fn main() {
     let application = Application::builder()
-        .application_id("org.3webs.vanadium")
+        .application_id(CARGO_MANIFEST["package"]["metadata"]["application_id"].as_str().unwrap())
         .build();
 
     application.connect_activate(|app| {
         // Create a new window
         let window = ApplicationWindow::builder()
             .application(app)
-            .title("Vanadium")
+            .title(CARGO_MANIFEST["package"]["metadata"]["human_readable_name"].as_str().unwrap())
             .show_menubar(true)
             .maximized(true)
             .build();
@@ -79,7 +90,10 @@ fn main() {
         settings.set_media_playback_requires_user_gesture(true); // TODO: This should be configurable
         settings.set_print_backgrounds(true);
         settings.set_zoom_text_only(false); // TODO: This should be configurable
-        settings.set_user_agent_with_application_details(Some("Vanadium"), Some(&env!("CARGO_PKG_VERSION")));
+        settings.set_user_agent_with_application_details(
+            Some(CARGO_MANIFEST["package"]["metadata"]["human_readable_name"].as_str().unwrap()),
+            Some(CARGO_MANIFEST["package"]["version"].as_str().unwrap())
+        );
 
         // Get font data from the system and set those as default
         let gtk_settings = Settings::for_display(&Display::default().unwrap());
@@ -210,16 +224,14 @@ fn main() {
         about_action.connect_activate(clone!(@weak window => move |_, _| {
             let about = adw::AboutWindow::builder()
                 .transient_for(&window)
-                .application_name("Vanadium")
-                .version(env!("CARGO_PKG_VERSION"))
-                .website("https://github.com/3webs-org/vanadium")
-                .issue_url("https://github.com/3webs-org/vanadium/issues")
-                .developer_name("3WEBS LLC")
-                .copyright("© 2024 3WEBS LLC")
+                .application_name(CARGO_MANIFEST["package"]["metadata"]["human_readable_name"].as_str().unwrap())
+                .version(CARGO_MANIFEST["package"]["version"].as_str().unwrap())
+                .website(CARGO_MANIFEST["package"]["homepage"].as_str().unwrap())
+                .issue_url(CARGO_MANIFEST["package"]["metadata"]["issue_url"].as_str().unwrap())
+                .developer_name(CARGO_MANIFEST["package"]["metadata"]["developer_name"].as_str().unwrap())
+                .copyright(CARGO_MANIFEST["package"]["metadata"]["copyright"].as_str().unwrap())
                 .license_type(gtk4::License::Gpl30)
-                .developers([
-                    "Gavin John <admin@3webs.org>",
-                ])
+                .developers(CARGO_MANIFEST["package"]["authors"].as_array().unwrap().iter().map(|x| x.as_str().unwrap()).collect::<Vec<&str>>())
                 .build();
             about.add_legal_section(
                 "gtk-rs-core",

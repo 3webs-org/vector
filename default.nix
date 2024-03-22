@@ -1,7 +1,7 @@
 { pkgs ? import <nixpkgs> { }, lib }: with pkgs; let
-    humanReadableName = "Vanadium";
     cargoToml = builtins.readFile ./Cargo.toml;
     packageData = lib.getAttr "package" (builtins.fromTOML cargoToml);
+    customPackageData = lib.getAttr "metadata" packageData;
 in rust.packages.stable.rustPlatform.buildRustPackage rec {
     pname = packageData.name;
     version = packageData.version;
@@ -35,7 +35,7 @@ in rust.packages.stable.rustPlatform.buildRustPackage rec {
 
         cat > $out/share/applications/${packageData.name}.desktop <<EOF
         [Desktop Entry]
-        Name=${humanReadableName}
+        Name=${customPackageData.human_readable_name}
         Exec=${packageData.name}
         Icon=${packageData.name}
         Type=Application

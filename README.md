@@ -6,3 +6,9 @@
 # Vanadium
 
 A web browser. Currently prototype-quality.
+
+## Installation
+
+```bash
+nix profile install github:3webs-org/vanadium
+```

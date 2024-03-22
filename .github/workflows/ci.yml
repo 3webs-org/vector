@@ -27,13 +27,11 @@ jobs:
               files: '**/*.md'
               separator: ","
           - name: 🖋️ Markdownlint
-            uses: DavidAnson/markdownlint-cli2-action@60d6e1a6c09d0d389af98ac9c542da83b37b34df
-            if: steps.changed.outcome == 'success'
+            uses: DavidAnson/markdownlint-cli2-action@510b996878fc0d1a46c8a04ec86b06dbfba09de7  # v15.0.0
+            if: steps.changed-files.outcome == 'success'
             with:
-              command: config
-              globs: |
-                .markdownlint.yml
-                ${{ env.CHANGED_FILES }}
+              config: .markdownlint.yml
+              globs: ${{ steps.changed-files.outputs.all_changed_files }}
     reuse:
         name: 📝 REUSE
         runs-on: ubuntu-latest

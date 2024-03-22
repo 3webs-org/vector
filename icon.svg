@@ -23,13 +23,13 @@
      inkscape:pageopacity="0"
      inkscape:pagecheckerboard="1"
      inkscape:deskcolor="#505050"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="177.83736"
-     inkscape:cy="259.86174"
+     inkscape:zoom="1.3864516"
+     inkscape:cx="179.23453"
+     inkscape:cy="343.32247"
      inkscape:window-width="1920"
      inkscape:window-height="1003"
      inkscape:window-x="0"
-     inkscape:window-y="40"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
   <defs
@@ -73,7 +73,8 @@
        y1="256"
        x2="448"
        y2="256"
-       gradientUnits="userSpaceOnUse" />
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.9,0,0,0.9,25.6,25.6)" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient22"
@@ -82,26 +83,25 @@
        y1="0"
        x2="196"
        y2="0"
-       gradientUnits="userSpaceOnUse" />
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.9,-0.9,0,256,256)" />
   </defs>
   <g
      id="layer1"
      transform="matrix(1.3332978,0,0,1.3198382,-85.324218,-84.462812)">
     <circle
-       style="fill:url(#linearGradient6);fill-opacity:1"
+       style="mix-blend-mode:normal;fill:url(#linearGradient6);fill-opacity:1;stroke:#ffffff;stroke-width:15.07669216;stroke-dasharray:none;stroke-opacity:1"
        id="path1"
        cx="256"
        cy="256"
-       r="192" />
+       r="172.8" />
     <path
-       style="fill:url(#linearGradient23);fill-opacity:1;stroke:none;stroke-opacity:1;stroke-width:1.00033852;stroke-dasharray:none"
+       style="fill:url(#linearGradient23);fill-opacity:1;stroke:#ffffff;stroke-width:3.76917304;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
        id="path10"
-       transform="rotate(90,0,256)"
-       d="M 196,0 -98,169.74098 v -339.48196 z" />
+       d="M 256,432.4 103.23312,167.8 h 305.53376 z" />
     <path
-       style="fill:#241f31;fill-opacity:1"
+       style="fill:#241f31;fill-opacity:1;stroke-width:3.76917304;stroke-dasharray:none;stroke:#ffffff;stroke-opacity:1"
        id="path11"
-       transform="rotate(90,17,239)"
-       d="M 128,0 -64,110.85125 v -221.7025 z" />
+       d="M 256,340.6 156.23387,167.8 h 199.53225 z" />
   </g>
 </svg>

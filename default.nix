@@ -1,11 +1,11 @@
-{ pkgs ? import <nixpkgs> { }, lib }: with pkgs; let
+{ pkgs ? import <nixpkgs> { } }: with pkgs; let
     cargoToml = builtins.readFile ./Cargo.toml;
-    packageData = lib.getAttr "package" (builtins.fromTOML cargoToml);
-    customPackageData = lib.getAttr "metadata" packageData;
+    packageData = pkgs.lib.getAttr "package" (builtins.fromTOML cargoToml);
+    customPackageData = pkgs.lib.getAttr "metadata" packageData;
 in rust.packages.stable.rustPlatform.buildRustPackage rec {
     pname = packageData.name;
     version = packageData.version;
-    src = lib.cleanSource ./.;
+    src = pkgs.lib.cleanSource ./.;
 
     buildInputs = [
         pkg-config
@@ -49,7 +49,7 @@ in rust.packages.stable.rustPlatform.buildRustPackage rec {
     meta = {
         description = packageData.description;
         homepage = packageData.homepage;
-        platforms = lib.platforms.linux;
+        platforms = pkgs.lib.platforms.linux;
         license = packageData.license;
         maintainers = [ ]; # TODO
         mainProgram = "${packageData.name}";

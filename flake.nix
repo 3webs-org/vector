@@ -1,10 +1,12 @@
+# Copyright 2024 3WEBS LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 let
   cargoToml = builtins.readFile ./Cargo.toml;
   packageData = nixpkgs.lib.getAttr "package" (builtins.fromTOML cargoToml);
   customPackageData = nixpkgs.lib.getAttr "metadata" packageData;
 in {
   description = packageData.description;
-
   inputs = {
     nixpkgs = {
       url = "github:NixOS/nixpkgs/23.11";

@@ -7,6 +7,7 @@ let
   customPackageData = nixpkgs.lib.getAttr "metadata" packageData;
 in {
   description = packageData.description;
+
   inputs = {
     nixpkgs = {
       url = "github:NixOS/nixpkgs/23.11";

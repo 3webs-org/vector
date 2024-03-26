@@ -28,8 +28,9 @@ jobs:
               separator: ","
           - name: 🖋️ Markdownlint
             uses: DavidAnson/markdownlint-cli2-action@510b996878fc0d1a46c8a04ec86b06dbfba09de7  # v15.0.0
-            if: steps.changed-files.outcome == 'success'
+            if: steps.changed-files.outcome == 'success' && steps.changed-files.outputs.all_changed_files != ''
             with:
+              separator: ","
               config: .markdownlint.yml
               globs: ${{ steps.changed-files.outputs.all_changed_files }}
     reuse:

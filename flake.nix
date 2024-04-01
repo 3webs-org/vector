@@ -4,8 +4,6 @@
 let
   cargoToml = builtins.readFile ./Cargo.toml;
 in {
-  description = packageData.description;
-
   inputs = {
     nixpkgs = {
       url = "github:NixOS/nixpkgs/23.11";

@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 [package]
-name = "vanadium-browser"
+name = "vector-browser"
 version = "0.1.0"
 authors = [
     "Gavin John <admin@3webs.org>"
@@ -11,14 +11,14 @@ edition = "2018"
 description = "TODO"
 documentation = "TODO"
 readme = "./README.md"
-homepage = "https://github.com/3webs-org/vanadium"
-repository = "https://github.com/3webs-org/vanadium"
+homepage = "https://github.com/3webs-org/vector"
+repository = "https://github.com/3webs-org/vector"
 license = "GPL-3.0-or-later"
 
 [package.metadata]
-application_id = "org.3webs.vanadium"
-human_readable_name = "Vanadium"
-issue_url = "https://github.com/3webs-org/vanadium/issues"
+application_id = "org.3webs.vector"
+human_readable_name = "Vector"
+issue_url = "https://github.com/3webs-org/vector/issues"
 developer_name = "3WEBS LLC"
 copyright = "© 2024 3WEBS LLC"
 

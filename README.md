@@ -3,12 +3,12 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 ---
 
-# Vanadium
+# Vector
 
 A web browser. Currently prototype-quality.
 
 ## Installation
 
 ```bash
-nix profile install github:3webs-org/vanadium
+nix profile install github:3webs-org/vector
 ```

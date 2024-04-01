@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: vanadium
-Source: https://github.com/3webs-org/vanadium
+Upstream-Name: vector
+Source: https://github.com/3webs-org/vector
 
 Files:
   flake.lock

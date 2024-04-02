@@ -7,7 +7,7 @@
       url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     };
     nci = {
-      url = "github:yusdacra/nix-cargo-integration/53af4303dda1fe6e575b2c5ee662ac9b23a18c9f";
+      url = "github:yusdacra/nix-cargo-integration";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     parts = {
@@ -66,7 +66,6 @@
                   Categories=Network;WebBrowser;
                   EOF
 
-                  # TODO: Figure out how to not hardcode release
                   cp ./icon.svg $out/share/pixmaps/${packageData.name}.svg
                 '';
               };

@@ -72,7 +72,6 @@ fn main() {
         settings.set_enable_media_stream(true);
         settings.set_enable_mediasource(true);
         settings.set_enable_mock_capture_devices(false); // Is there any good reason to enable this?
-        settings.set_enable_offline_web_application_cache(true);
         settings.set_enable_page_cache(true);
         settings.set_enable_resizable_text_areas(false); // This has always been a pet peeve of mine
         settings.set_enable_site_specific_quirks(false);

@@ -3,9 +3,6 @@
 
 name: Continuous Integration
 
-env:
-  RUSTFLAGS: "-Dwarnings"
-
 on:  # yamllint disable-line
   push:
     branches:
@@ -85,4 +82,4 @@ jobs:
         with:
           fetch-depth: 2
       - name: 📎 Clippy
-        run: cargo clippy --all-targets --all-features
+        run: cargo clippy --all-targets --all-features --no-deps -- -Dwarnings

@@ -72,7 +72,11 @@
             };
           };
         };
-        devShells.default = crateOutputs.devShell;
+        devShells.default = crateOutputs.devShell.overrideAttrs (oldAttrs: {
+          nativeBuildInputs = oldAttrs.nativeBuildInputs ++ (with pkgs; [
+            reuse
+          ]);
+        });
         packages.default = crateOutputs.packages.release;
       };
     }

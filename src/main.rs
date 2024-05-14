@@ -103,9 +103,9 @@ fn main() {
         settings.set_pictograph_font_family("serif"); // System default
         settings.set_sans_serif_font_family("sans-serif"); // System default
         settings.set_serif_font_family("serif"); // System default
-        if font != None {
+        if font.is_some() {
             // Font size is last part of the string
-            let mut font_split = font.as_ref().unwrap().split(" ").collect::<Vec<&str>>();
+            let mut font_split = font.as_ref().unwrap().split(' ').collect::<Vec<&str>>();
             let font_size = font_split.pop().unwrap().parse::<u32>().unwrap();
             let font_family = font_split.join(" ");
             settings.set_default_font_family(&font_family);

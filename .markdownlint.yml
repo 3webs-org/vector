@@ -1,5 +1,7 @@
 # Copyright 2024 3WEBS LLC
 # SPDX-License-Identifier: LicenseRef-Copyright-Ineligiblity-Disclaimer-1.0
+# yamllint disable rule:line-length
 # yaml-language-server: $schema=https://raw.githubusercontent.com/DavidAnson/markdownlint/main/schema/markdownlint-config-schema.json
+# yamllint enable
 
 default: true

@@ -77,7 +77,7 @@ jobs:
       - name: 📜 Yamllint
         run: yamllint -c .yamllint.yml ${{ steps.changed-files.outputs.all_changed_files }}
   clippy:
-    name: 📎 Yamllint
+    name: 📎 Clippy
     runs-on: ubuntu-latest
     steps:
       - name: 📦 Checkout Repository

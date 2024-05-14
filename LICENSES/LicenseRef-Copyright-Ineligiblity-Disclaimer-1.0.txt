@@ -1,0 +1,9 @@
+# Copyright Ineligiblity Disclaimer 1.0
+
+THIS WORK IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS (OR, TO THE EXTENT THAT COPYRIGHT APPLIES, THE COPYRIGHT HOLDERS) BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THIS WORK OR THE USE OR OTHER DEALINGS IN THIS WORK.
+
+The author(s) believe that this work is not eligible for copyright protection. However, to the extent that copyright applies, the author(s) have dedicated all copyright and related and neighboring rights to this work to the public domain worldwide, to the extent possible under law.
+
+If this dedication to the public domain is not legally effective in any jurisdiction, then to the extent copyright applies, the following license terms shall apply:
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this work and associated documentation files (the "Work"), to deal in the Work without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Work, and to permit persons to whom the Work is furnished to do so.

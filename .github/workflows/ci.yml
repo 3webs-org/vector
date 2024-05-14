@@ -82,6 +82,6 @@ jobs:
         with:
           fetch-depth: 2
       - name: 🧮 Add Missing Dependencies
-        run: sudo apt install libpango1.0-dev libgirepository1.0-dev
+        run: sudo apt install libpango1.0-dev libgirepository1.0-dev libgtk-4-dev
       - name: 📎 Clippy
         run: cargo clippy --all-targets --all-features --no-deps -- -Dwarnings

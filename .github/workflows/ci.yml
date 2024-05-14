@@ -85,5 +85,7 @@ jobs:
         uses: cachix/install-nix-action@8887e596b4ee1134dae06b98d573bd674693f47c  # v26
         with:
           extra_nix_config: "system-features = nixos-test benchmark big-parallel kvm"
+      - name: ❄️ Cache Nix Store
+        uses: DeterminateSystems/magic-nix-cache-action@87e8236f46702ab0ce5a058b605a173ec88d618e  # v6
       - name: 📎 Clippy
         run: nix develop --command cargo clippy --all-targets --all-features --no-deps -- -Dwarnings

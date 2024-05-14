@@ -86,4 +86,4 @@ jobs:
         with:
           extra_nix_config: "system-features = nixos-test benchmark big-parallel kvm"
       - name: 📎 Clippy
-        run: nix develop --command cargo -c "clippy --all-targets --all-features --no-deps -- -Dwarnings"
+        run: nix develop --command cargo clippy --all-targets --all-features --no-deps -- -Dwarnings

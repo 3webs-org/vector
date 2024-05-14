@@ -5,13 +5,12 @@ Source: https://github.com/3webs-org/vector
 Files:
   flake.lock
   Cargo.lock
-Copyright: No Copyright
-License: CC0-1.0
-Comment: Computer-generated files have no copyright and are therefore public domain by default.
+Copyright: Authored 2024 3WEBS LLC
+License: LicenseRef-Copyright-Ineligiblity-Disclaimer-1.0
+Comment: Computer-generated lockfiles have no copyright.
 
 Files:
   .github/CODE_OF_CONDUCT.md
-  .github/renovate.json
 Copyright: Unknown
 License: CC0-1.0
 Comment: The licenses of these files are unknown

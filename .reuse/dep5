@@ -5,18 +5,12 @@ Source: https://github.com/3webs-org/vector
 Files:
   flake.lock
   Cargo.lock
-Copyright: Authored 2024 3WEBS LLC
+Copyright: 2024 3WEBS LLC
 License: LicenseRef-Copyright-Ineligiblity-Disclaimer-1.0
 Comment: Computer-generated lockfiles have no copyright.
 
 Files:
-  .github/CODE_OF_CONDUCT.md
-Copyright: Unknown
-License: CC0-1.0
-Comment: The licenses of these files are unknown
-
-Files:
   assets/*
-Copyright: Copyright 2024 3WEBS LLC
+Copyright: 2024 3WEBS LLC
 License: GPL-3.0-or-later
 Comment: 3WEBS LLC plans to apply for a trademark

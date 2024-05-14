@@ -1,5 +1,5 @@
 // Copyright 2024 3WEBS LLC
-// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-License-Identifier: LicenseRef-Copyright-Ineligiblity-Disclaimer-1.0
 
 fn main() {
 }

@@ -28,7 +28,7 @@ jobs:
           separator: ","
       - name: 🖋️ Markdownlint
         uses: DavidAnson/markdownlint-cli2-action@b4c9feab76d8025d1e83c653fa3990936df0e6c8  # v16.0.0
-        if: steps.changed-files.outcome == 'success' && steps.changed-files.outputs.all_changed_files != ''
+        if: steps.changed-files.outputs.all_changed_files != ''
         with:
           separator: ","
           config: .markdownlint.yml
@@ -71,6 +71,14 @@ jobs:
         uses: cachix/install-nix-action@8887e596b4ee1134dae06b98d573bd674693f47c  # v26
         with:
           extra_nix_config: "system-features = nixos-test benchmark big-parallel kvm"
+      - name: ❄️ Cache Nix Store
+        uses: DeterminateSystems/magic-nix-cache-action@87e8236f46702ab0ce5a058b605a173ec88d618e  # v6
+        with:
+          # Skip uploads for PRs to save time
+          use-gha-cache: ${{ github.event_name == 'push' }}
+          use-flakehub: ${{ github.event_name == 'push' }}
+          # Disable telemetry
+          diagnostic-endpoint: ""
       - name: 📜 Yamllint
         if: steps.changed-files.outputs.all_changed_files != ''
         run: yamllint -c .yamllint.yml ${{ steps.changed-files.outputs.all_changed_files }}
@@ -88,5 +96,11 @@ jobs:
           extra_nix_config: "system-features = nixos-test benchmark big-parallel kvm"
       - name: ❄️ Cache Nix Store
         uses: DeterminateSystems/magic-nix-cache-action@87e8236f46702ab0ce5a058b605a173ec88d618e  # v6
+        with:
+          # Skip uploads for PRs to save time
+          use-gha-cache: ${{ github.event_name == 'push' }}
+          use-flakehub: ${{ github.event_name == 'push' }}
+          # Disable telemetry
+          diagnostic-endpoint: ""
       - name: 📎 Clippy
-        run: nix develop --command cargo clippy --all-targets --all-features --no-deps -- -Dwarnings
+        run: cargo clippy --all-targets --all-features --no-deps -- -Dwarnings

@@ -6,79 +6,107 @@
     nixpkgs = {
       url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     };
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    crate2nix = {
+      url = "github:nix-community/crate2nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
-    nci = {
-      url = "github:yusdacra/nix-cargo-integration";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = inputs @ { self, nixpkgs, parts, nci, ... }: parts.lib.mkFlake { inherit inputs; } (
+  outputs = inputs @ { self, nixpkgs, rust-overlay, parts, ... }: parts.lib.mkFlake { inherit inputs; } (
     let
       cargoToml = builtins.readFile ./Cargo.toml;
       packageData = nixpkgs.lib.getAttr "package" (builtins.fromTOML cargoToml);
       customPackageData = nixpkgs.lib.getAttr "metadata" packageData;
     in {
-      systems = [ "x86_64-linux" ];
-      imports = [ nci.flakeModule ];
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
+      
       perSystem = {
+        system,
         pkgs,
-        config,
+        lib,
+        inputs',
         ...
       }: let
-        crateOutputs = config.nci.outputs."${packageData.name}";
-      in {
-        nci = {
-          projects."${packageData.name}" = {
-            path = ./.;
-          };
-          crates."${packageData.name}" = rec {
-            depsDrvConfig = {
-              mkDerivation = with pkgs; {
-                nativeBuildInputs = [ pkg-config ];
-                buildInputs = [
-                  gtk4
-                  glib
-                  libadwaita
-                  webkitgtk_6_0
-                  gst_all_1.gst-plugins-base
-                  gst_all_1.gst-plugins-good
-                  gst_all_1.gst-plugins-bad
-                ];
-              };
+        cargoNix = pkgs.callPackage (inputs.crate2nix.tools.${system}.generatedCargoNix {
+          name = packageData.name;
+          src = ./.;
+        }) {
+          defaultCrateOverrides = pkgs.defaultCrateOverrides // {
+            gobject-sys = attrs: {
+              nativeBuildInputs = with pkgs; [ pkg-config ];
+              buildInputs = with pkgs; [ gtk4 ];
             };
-            drvConfig = {
-              mkDerivation = {
-                nativeBuildInputs = [ pkgs.pkg-config ];
-                buildInputs = depsDrvConfig.mkDerivation.buildInputs;
-                postInstall = ''
-                  mkdir -p $out/share/applications $out/share/pixmaps
-
-                  cat > $out/share/applications/${packageData.name}.desktop <<EOF
-                  [Desktop Entry]
-                  Name=${customPackageData.human_readable_name}
-                  Exec=${packageData.name}
-                  Icon=${packageData.name}
-                  Type=Application
-                  Categories=Network;WebBrowser;
-                  EOF
-
-                  cp $src/assets/icon.svg $out/share/pixmaps/${packageData.name}.svg
-                '';
-              };
+            javascriptcore6-sys = attrs: {
+              nativeBuildInputs = with pkgs; [ pkg-config ];
+              buildInputs = with pkgs; [ webkitgtk_6_0 ];
+            };
+            gio-sys = attrs: {
+              nativeBuildInputs = with pkgs; [ pkg-config ];
+              buildInputs = with pkgs; [ glib ];
+            };
+            soup3-sys = attrs: {
+              nativeBuildInputs = with pkgs; [ pkg-config ];
+              buildInputs = with pkgs; [ webkitgtk_6_0 ];
+            };
+            gdk-pixbuf-sys = attrs: {
+              nativeBuildInputs = with pkgs; [ pkg-config ];
+              buildInputs = with pkgs; [ gtk4 ];
+            };
+            libadwaita-sys = attrs: {
+              nativeBuildInputs = with pkgs; [ pkg-config ];
+              buildInputs = with pkgs; [ libadwaita ];
+            };
+            webkit6-sys = attrs: {
+              nativeBuildInputs = with pkgs; [ pkg-config ];
+              buildInputs = with pkgs; [ webkitgtk_6_0 ];
             };
           };
         };
-        devShells.default = crateOutputs.devShell.overrideAttrs (oldAttrs: {
-          nativeBuildInputs = oldAttrs.nativeBuildInputs ++ (with pkgs; [
+        defaultPackage = cargoNix.rootCrate.build.overrideAttrs (oldAttrs: {
+          postInstall = ''
+            mkdir -p $out/share/applications $out/share/pixmaps
+
+            cat > $out/share/applications/${packageData.name}.desktop <<EOF
+            [Desktop Entry]
+            Name=${customPackageData.human_readable_name}
+            Exec=${packageData.name}
+            Icon=${packageData.name}
+            Type=Application
+            Categories=Network;WebBrowser;
+            EOF
+
+            cp $src/assets/icon.svg $out/share/pixmaps/${packageData.name}.svg
+          '';
+        });
+      in rec {
+        packages = {
+          default = defaultPackage;
+        };
+
+        checks = {
+          rustnix = packages.default.override {
+            runTests = true;
+          };
+        };
+
+        devShells.default = defaultPackage.overrideAttrs (oldAttrs: {
+          buildInputs = oldAttrs.buildInputs ++ (with pkgs; [
+            rust-overlay.packages.${system}.default
+            yamllint
             reuse
-            python3Packages.yamllint
           ]);
         });
-        packages.default = crateOutputs.packages.release;
       };
     }
   );

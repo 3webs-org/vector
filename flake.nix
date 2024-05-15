@@ -66,7 +66,7 @@
                   Categories=Network;WebBrowser;
                   EOF
 
-                  cp ./assests/icon.svg $out/share/pixmaps/${packageData.name}.svg
+                  cp $src/assets/icon.svg $out/share/pixmaps/${packageData.name}.svg
                 '';
               };
             };

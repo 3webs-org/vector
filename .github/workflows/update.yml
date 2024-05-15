@@ -36,7 +36,7 @@ jobs:
           git add flake.lock
           git commit -m "Automatic Nix Flake Lock Update"
       - name: 📤 Force-Push Changes
-        run: git push --force origin update-flake-lock
+        run: git push --force --set-upstream origin update-flake
       - name: 🔍 Check for Existing PR
         id: check_pr
         run: |

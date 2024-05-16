@@ -6,10 +6,6 @@
     nixpkgs = {
       url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     };
-    rust-overlay = {
-      url = "github:oxalica/rust-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     crate2nix = {
       url = "github:nix-community/crate2nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -20,7 +16,7 @@
     };
   };
 
-  outputs = inputs @ { self, nixpkgs, rust-overlay, parts, ... }: parts.lib.mkFlake { inherit inputs; } (
+  outputs = inputs @ { self, nixpkgs, parts, ... }: parts.lib.mkFlake { inherit inputs; } (
     let
       cargoToml = builtins.readFile ./Cargo.toml;
       packageData = nixpkgs.lib.getAttr "package" (builtins.fromTOML cargoToml);
@@ -97,7 +93,6 @@
             pkg-config
           ]);
           buildInputs = oldAttrs.buildInputs ++ libraries ++ (with pkgs; [
-            rust-overlay.packages.${system}.default
             yamllint
             reuse
           ]);

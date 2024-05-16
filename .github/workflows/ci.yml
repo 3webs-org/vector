@@ -95,6 +95,6 @@ jobs:
         with:
           fetch-depth: 2
       - name: Install dependencies
-        run: sudo apt install -y libpango1.0-dev libgirepository1.0-dev
+        run: sudo apt install -y libpango1.0-dev libgirepository1.0-dev libgtk-4-dev libadwaita-1-dev
       - name: 📎 Clippy
         run: cargo clippy --all-targets --all-features --no-deps -- -Dwarnings

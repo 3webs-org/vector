@@ -135,7 +135,7 @@ fn main() {
         let header = HeaderBar::builder()
             .can_focus(true)
             .build();
-        let url_bar = SearchEntry::builder()
+        let url_bar = Entry::builder()
             .activates_default(true)
             .placeholder_text("Enter URL")
             .max_width_chars(256)
@@ -145,6 +145,8 @@ fn main() {
             .focus_on_click(true)
             .xalign(0.5)
             .build();
+        
+        // Make the URL bar behave like a combined search and address bar
         let url_bar_focus_controller = EventControllerFocus::new();
         url_bar_focus_controller.connect_enter(clone!(@weak url_bar, @weak webview => move |_| {
             let uri = webview.uri();
@@ -158,8 +160,17 @@ fn main() {
             url_bar.set_text("");
         }));
         url_bar.connect_activate(clone!(@weak webview => move |entry| {
-            let uri = entry.text();
-            webview.load_uri(&uri);
+            let text = entry.text();
+            let url = Url::parse(&text);
+            if let Ok(url) = url {
+                if url.scheme() == "http" || url.scheme() == "https" {
+                    webview.load_uri(&text);
+                } else {
+                    webview.load_uri(&format!("https://duckduckgo.com/?q={}", text));
+                }
+            } else {
+                webview.load_uri(&format!("https://duckduckgo.com/?q={}", text));
+            }
             webview.grab_focus();
         }));
         webview.connect_uri_notify(clone!(@weak url_bar => move |webview| {
@@ -187,6 +198,30 @@ fn main() {
                 }
             }
         }));
+
+        // Search bar functionality
+        url_bar.connect_notify(Some("text"), move |url_bar, _| {
+            let text = url_bar.text();
+            if text == "" {
+                url_bar.set_icon_from_icon_name(EntryIconPosition::Primary, Some(""));
+                return;
+            }
+            let url = Url::parse(&text);
+            match url {
+                Ok(url) => {
+                    if url.scheme() == "http" || url.scheme() == "https" {
+                        url_bar.set_icon_from_icon_name(EntryIconPosition::Primary, Some("network-server-symbolic"));
+                    } else {
+                        url_bar.set_icon_from_icon_name(EntryIconPosition::Primary, Some("system-search-symbolic"));
+                    }
+                },
+                Err(_) => {
+                    url_bar.set_icon_from_icon_name(EntryIconPosition::Primary, Some("system-search-symbolic"));
+                }
+            }
+        });
+
+        // Add back, forward, and refresh buttons
         url_bar.add_controller(url_bar_focus_controller);
         header.set_title_widget(Some(&url_bar));
         let back_button = Button::builder()

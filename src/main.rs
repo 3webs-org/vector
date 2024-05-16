@@ -39,6 +39,18 @@ fn main() {
         // Combine the content in a box
         let content = Box::new(Orientation::Vertical, 0);
 
+        // Create a progress bar to show loading progress
+        let progress_bar = ProgressBar::builder()
+            .show_text(true)
+            .build();
+        progress_bar.set_hexpand(true);
+        progress_bar.set_vexpand(false);
+        progress_bar.set_show_text(false);
+        progress_bar.set_margin_top(0);
+        progress_bar.set_margin_bottom(0);
+        progress_bar.set_margin_start(0);
+        progress_bar.set_margin_end(0);
+
         // Initialize the webview right away
         let webview = WebView::new();
         webview.set_hexpand(true);
@@ -215,6 +227,27 @@ fn main() {
         }));
         header.pack_start(&refresh_button);
 
+        // Progress bar manager
+        webview.connect_load_changed(clone!(@weak progress_bar => move |_, load_event| {
+            match load_event {
+                webkit6::LoadEvent::Started => {
+                    progress_bar.set_fraction(0.0);
+                    progress_bar.show();
+                },
+                webkit6::LoadEvent::Redirected => {
+                    progress_bar.set_fraction(0.5);
+                },
+                webkit6::LoadEvent::Committed => {
+                    progress_bar.set_fraction(0.75);
+                },
+                webkit6::LoadEvent::Finished => {
+                    progress_bar.set_fraction(0.0);
+                    progress_bar.hide();
+                },
+                _ => {}
+            }
+        }));
+
         // Create the menu button and corresponding actions
         let menu = gio::Menu::new();
         menu.append(Some("About"), Some("app.about"));
@@ -276,6 +309,12 @@ fn main() {
             .build();
         header.pack_end(&menu_button);
         content.append(&header);
+
+        // Add the progress bar to the content
+        content.append(&progress_bar);
+
+        // Set progress bar to show loading progress
+        progress_bar.set_fraction(0.5);
 
         // Add the webview to the content
         webview.load_uri("https://example.com");

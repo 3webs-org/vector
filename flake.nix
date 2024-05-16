@@ -38,40 +38,32 @@
         inputs',
         ...
       }: let
+        libraries = with pkgs; [
+          gtk4
+          webkitgtk_6_0
+          glib
+          libadwaita
+        ];
+        cratesNeedOverriding = [
+          "gobject-sys"
+          "javascriptcore6-sys"
+          "gio-sys"
+          "soup3-sys"
+          "gdk-pixbuf-sys"
+          "libadwaita-sys"
+          "webkit6-sys"
+        ];
         cargoNix = pkgs.callPackage (inputs.crate2nix.tools.${system}.generatedCargoNix {
           name = packageData.name;
           src = ./.;
         }) {
-          defaultCrateOverrides = pkgs.defaultCrateOverrides // {
-            gobject-sys = attrs: {
-              nativeBuildInputs = with pkgs; [ pkg-config ];
-              buildInputs = with pkgs; [ gtk4 ];
-            };
-            javascriptcore6-sys = attrs: {
-              nativeBuildInputs = with pkgs; [ pkg-config ];
-              buildInputs = with pkgs; [ webkitgtk_6_0 ];
-            };
-            gio-sys = attrs: {
-              nativeBuildInputs = with pkgs; [ pkg-config ];
-              buildInputs = with pkgs; [ glib ];
-            };
-            soup3-sys = attrs: {
-              nativeBuildInputs = with pkgs; [ pkg-config ];
-              buildInputs = with pkgs; [ webkitgtk_6_0 ];
-            };
-            gdk-pixbuf-sys = attrs: {
-              nativeBuildInputs = with pkgs; [ pkg-config ];
-              buildInputs = with pkgs; [ gtk4 ];
-            };
-            libadwaita-sys = attrs: {
-              nativeBuildInputs = with pkgs; [ pkg-config ];
-              buildInputs = with pkgs; [ libadwaita ];
-            };
-            webkit6-sys = attrs: {
-              nativeBuildInputs = with pkgs; [ pkg-config ];
-              buildInputs = with pkgs; [ webkitgtk_6_0 ];
-            };
-          };
+          defaultCrateOverrides = pkgs.defaultCrateOverrides // (builtins.listToAttrs (builtins.map (crate: {
+            name = crate;
+            value = (attrs: {
+              nativeBuildInputs = [ pkgs.pkg-config ];
+              buildInputs = libraries;
+            });
+          }) cratesNeedOverriding));
         };
         defaultPackage = cargoNix.rootCrate.build.overrideAttrs (oldAttrs: {
           postInstall = ''
@@ -101,7 +93,10 @@
         };
 
         devShells.default = defaultPackage.overrideAttrs (oldAttrs: {
-          buildInputs = oldAttrs.buildInputs ++ (with pkgs; [
+          nativeBuildInputs = oldAttrs.nativeBuildInputs ++ (with pkgs; [
+            pkg-config
+          ]);
+          buildInputs = oldAttrs.buildInputs ++ libraries ++ (with pkgs; [
             rust-overlay.packages.${system}.default
             yamllint
             reuse

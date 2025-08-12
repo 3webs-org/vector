@@ -76,7 +76,7 @@ jobs:
         with:
           extra_nix_config: "system-features = nixos-test benchmark big-parallel kvm"
       - name: ❄️ Cache Nix Store
-        uses: DeterminateSystems/magic-nix-cache-action@b46e247b898aa56e6d2d2e728dc6df6c84fdb738 # v7
+        uses: DeterminateSystems/magic-nix-cache-action@565684385bcd71bad329742eefe8d12f2e765b39 # v13
         with:
           # Skip uploads for PRs to save time
           use-gha-cache: ${{ github.event_name == 'push' }}

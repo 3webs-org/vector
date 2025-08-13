@@ -56,7 +56,7 @@ jobs:
           shopt -s extglob
           rm -rf !(${{ steps.changed-files.outputs.all_changed_files }}|.reuse|LICENSES)
       - name: 📝 REUSE Compliance Check
-        uses: fsfe/reuse-action@a46482ca367aef4454a87620aa37c2be4b2f8106  # v3.0.0
+        uses: fsfe/reuse-action@bb774aa972c2a89ff34781233d275075cbddf542  # v5.0.0
   yamllint:
     name: 📜 Yamllint
     runs-on: ubuntu-latest

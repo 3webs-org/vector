@@ -28,7 +28,7 @@ lazy_static = "1.4.0"
 serde = { version = "1.0.200", features = ["derive"] }
 toml = "0.8.12"
 url = { version = "2.5.0", features = ["serde"] }
-webkit6 = { version = "0.3.0", features = ["v2_42", "v2_44"] }
+webkit6 = { version = "0.5.0", features = ["v2_42", "v2_44"] }
 
 [dependencies.adw]
 package = "libadwaita"

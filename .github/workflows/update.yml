@@ -24,7 +24,7 @@ jobs:
           git branch update-flake-lock
           git switch update-flake-lock
       - name: ❄️ Install Nix
-        uses: cachix/install-nix-action@56a7bb7b56d9a92d4fd1bc05758de7eea4a370a8 # v31
+        uses: cachix/install-nix-action@9280e7aca88deada44c930f1e2c78e21c3ae3edd # v31
         with:
           extra_nix_config: "system-features = nixos-test benchmark big-parallel kvm"
       - name: ❄️ Cache Nix Store

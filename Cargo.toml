@@ -26,7 +26,7 @@ copyright = "© 2024 3WEBS LLC"
 gtk4 = { version = "0.8.2", features = ["v4_2", "v4_4", "v4_6", "v4_8", "v4_10", "v4_12", "v4_14"] }
 lazy_static = "1.4.0"
 serde = { version = "1.0.200", features = ["derive"] }
-toml = "0.8.12"
+toml = "0.9.0"
 url = { version = "2.5.0", features = ["serde"] }
 webkit6 = { version = "0.3.0", features = ["v2_42", "v2_44"] }
 
